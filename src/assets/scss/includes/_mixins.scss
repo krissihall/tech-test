@@ -1,0 +1,51 @@
+@mixin light-font() {
+    font-family: $default-font;
+    font-weight: $light-font-weight;
+}
+
+@mixin regular-font() {
+    font-family: $default-font;
+    font-weight: $regular-font-weight;
+}
+
+@mixin medium-font() {
+    font-family: $default-font;
+    font-weight: $medium-font-weight;
+}
+
+@mixin bold-font() {
+    font-family: $default-font;
+    font-weight: $bold-font-weight;
+}
+
+@mixin tag($tag) {
+    $ampersand: & + '';
+    $selectors: simple-selectors(str-replace($ampersand, ' ', ''));
+
+    $main-selector: nth($selectors, -1);
+    $previous-selectors: str-replace($ampersand, $main-selector, '');
+
+    @at-root {
+        #{$previous-selectors}#{$tag}#{$main-selector} {
+            @content;
+        }
+    }
+}
+
+@mixin unify-parent($child) {
+    @at-root #{selector.unify(&, $child)} {
+        @content;
+    }
+}
+
+@mixin multi-shadow($params...) {
+    box-shadow: $params;
+    -webkit-box-shadow: $params;
+    -moz-box-shadow: $params;
+}
+
+@mixin boxShadow($properties: 0 rem-calc(3) rem-calc(6) 0 rgba($black, 0.16)) {
+    box-shadow: $params;
+    -webkit-box-shadow: $properties;
+    -moz-box-shadow: $properties;
+}

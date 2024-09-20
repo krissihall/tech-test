@@ -1,0 +1,29 @@
+@use "sass:math";
+
+@function strip-unit($number) {
+    @if type-of($number)=='number' and not unitless($number) {
+        @return math.div($number, ($number * 0 + 1));
+    }
+
+    @return $number;
+}
+
+@function rem-calc($value, $base-value: $base) {
+    $value: math.div(strip-unit($value), strip-unit($base-value)) * 1rem;
+
+    @if ($value == 0rem) {
+        $value: 0;
+    }
+
+    @return $value;
+}
+
+@function px-calc($value, $base-value: $base) {
+    $value: strip-unit($value), strip-unit($base-value) * 1px;
+
+    @if ($value == 0px) {
+        $value: 0;
+    }
+
+    @return $value;
+}

@@ -1,0 +1,28 @@
+// Color Variables
+// $dark:            #000;
+// $light:           #fff;
+// $primary:         #14213d;
+// $secondary:       #fca311;
+// $tertiary:        #e5e5e5;
+
+$dark:        #2e294e;
+$light:       #f1e9da;
+$primary:     #d90368;
+$secondary:   #ffd400;
+$tertiary:    #541388;
+
+// - Global
+$base:             16;
+$global-bg-color:  $dark;
+$global-color:     $light;
+$max-screen-width: rem-calc(1600);
+$x-padding:        rem-calc(12);
+$y-padding:        rem-calc(12);
+
+// Font Variables
+$default-font: 'Roboto', Arial, Verdana, san-serif;
+
+$light-font-weight:   300;
+$regular-font-weight: 400;
+$medium-font-weight:  500;
+$bold-font-weight:    700;

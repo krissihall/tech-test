@@ -1,0 +1,42 @@
+html {
+    @include regular-font;
+}
+
+body {
+    @include regular-font;
+    background: $global-bg-color;
+    color: $global-color;
+}
+
+.container-fluid {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: $max-screen-width;
+    width: 100%;
+}
+
+h1,
+.h1 {
+    @include bold-font;
+}
+
+h2,
+.h2 {
+    @include medium-font;
+}
+
+h3,
+.h3 {
+    @include regular-font;
+}
+
+h4,
+.h4 {
+    @include regular-font;
+    text-decoration: uppercase;
+}
+
+h5,
+.h5 {
+    @include light-font;
+}
