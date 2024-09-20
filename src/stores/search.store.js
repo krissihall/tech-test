@@ -6,7 +6,9 @@ export const useSearchStore = defineStore('searchStore', {
         currentSearch: null,
         searchResults: {},
         currentCategory: '',
-        isSearching: false
+        isSearching: false,
+        searchHistory: [],
+        isHistorySaving: false
     }),
     getters: {},
     actions: {
@@ -15,6 +17,20 @@ export const useSearchStore = defineStore('searchStore', {
             searchService.getSearchResults(search, this.currentCategory)
                 .then((results) => {
                     this.searchResults = results;
+                    if (results.Response !== 'False') {
+                        this.saveSearchResults(results);
+                    }
+                })
+                .finally(() => {
+                    this.getSearchHistory();
+                    this.isSearching = false;
+                });
+        },
+        getSearchHistory() {
+            this.isSearching = true;
+            searchService.getSearchHistory()
+                .then((results) => {
+                    this.searchHistory = results.slice().reverse();
                 })
                 .finally(() => {
                     this.isSearching = false;
@@ -24,6 +40,25 @@ export const useSearchStore = defineStore('searchStore', {
             this.currentCategory = '';
             this.currentSearch = '';
             this.searchResults = {};
+        },
+        saveSearchResults(result) {
+            this.isHistorySaving = true;
+
+            return new Promise((resolve) => {
+                searchService.addSearchHistoryEntry(result)
+                    .then(
+                        (data) => {
+                            console.log(`Submitted data: ${data}`);
+                            resolve();
+                        },
+                        (error) => {
+                            resolve(error);
+                        }
+                    )
+                    .finally(() => {
+                        this.isHistorySaving = false;
+                    });
+            });
         }
     }
 });

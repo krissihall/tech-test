@@ -34,6 +34,45 @@ const getSearchResults = (keyword, category) => {
     }
 };
 
+const getSearchHistory = () => {
+    try {
+        return fetch('/json/searchHistory', {
+            method: 'get',
+            headers: {
+                'Access-Control-Allow-Origin': 'http://localhost:5173',
+                'Content-type': 'application/json; charset=UTF-8'
+            }
+        })
+            .then(handleResponse)
+            .then((json) => {
+                return json;
+            });
+    } catch (e) {
+        console.log(`${e}: error getting search history`);
+    }
+};
+
+const addSearchHistoryEntry = (dataObj) => {
+    try {
+        return fetch('/json/searchHistory', {
+            method: 'post',
+            headers: {
+                'Access-Control-Allow-Origin': 'http://localhost:5173',
+                'Content-type': 'application/json; charset=UTF-8'
+            },
+            body: JSON.stringify(dataObj)
+        })
+            .then(handleResponse)
+            .then((json) => {
+                return json;
+            });
+    } catch (e) {
+        console.log(`${e}: error saving movie result to json-server`);
+    }
+};
+
 export const searchService = {
-    getSearchResults
+    getSearchResults,
+    getSearchHistory,
+    addSearchHistoryEntry
 };

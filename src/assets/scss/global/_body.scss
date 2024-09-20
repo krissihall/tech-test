@@ -8,6 +8,18 @@ body {
     color: $global-color;
 }
 
+a {
+    color: color.adjust($primary, $lightness: 15%);
+    text-decoration: none;
+    transition: color 0.5s ease-in-out;
+
+    &:hover,
+    &:focus,
+    &:active {
+        color: color.adjust($primary, $lightness: 30%);
+    }
+}
+
 .container-fluid {
     margin-left: auto;
     margin-right: auto;
