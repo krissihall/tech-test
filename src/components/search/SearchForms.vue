@@ -1,28 +1,23 @@
 <template>
     <div class="search-container container-fluid">
         <div class="row justify-between mt-4 mb-4">
-            <div class="col col-12 col-md-6 mb-2">
+            <div class="col col-12 mb-2">
                 <div class="row align-items-end">
                     <div class="col">
-                        <label class="me-2" for="titleInput">Search by Title:</label>
-                        <input v-model="titleValue" id="titleInput" type="text" ref="titleField" class="form-control" placeholder="Movie Title" />
+                        <label class="me-2" for="searchInput">Search:</label>
+                        <input v-model="searchValue" id="searchInput" type="text" ref="searchField" class="form-control" placeholder="Search" />
+                    </div>
+                    <div class="col">
+                        <label>Filter By:</label>
+                        <select v-model="selectedFilter" ref="filterField" id="filterSelect" class="form-select" @change="changeSelectFilter">
+                            <option disabled selected>Filter</option>
+                            <option value="title">Title</option>
+                            <option value="id">IMDb ID</option>
+                        </select>
                     </div>
                     <div class="col col-auto">
-                        <button class="btn btn-primary me-2" @click="searchTitleEvent">Search</button>
-                        <button class="btn btn-secondary" @click="clearTitleSearch">Clear</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col col-12 col-md-6 mb-2">
-                <div class="row align-items-end">
-                    <div class="col col">
-                        <label class="me-2" for="idInput">Search by IMDb ID:</label>
-                        <input v-model="idValue" id="idInput" type="text" ref="idField" class="form-control" placeholder="IMDb ID" /><!-- valid ID to test with: tt4154796 -->
-                    </div>
-                    <div class="col col-auto">
-                        <button class="btn btn-primary me-2" @click="searchIdEvent">Search</button>
-                        <button class="btn btn-secondary" @click="clearIdSearch">Clear</button>
+                        <button class="btn btn-primary me-2" @click="searchEvent">Search</button>
+                        <button class="btn btn-secondary" @click="clearSearch">Clear</button>
                     </div>
                 </div>
             </div>
@@ -37,44 +32,34 @@ import { useSearchStore } from '@/stores';
 const searchStore = useSearchStore();
 const searchResults = ref(searchStore.searchResults || '');
 
-const titleField = ref(null);
-const titleValue = ref(searchStore.currentSearch || '');
+const searchField = ref(null);
+const searchValue = ref(searchStore.currentSearch || '');
 
-const idField = ref(null);
-const idValue = ref(searchStore.currentSearch || '');
+const filterField = ref(null);
+const selectedFilter = ref(searchStore.currentCategory || 'search');
 
-const searchTitleEvent = async () => {
+const searchEvent = async () => {
     searchStore.clearSearch();
 
-    searchStore.currentCategory = 'title';
-    await searchStore.getSearchResults(titleValue.value);
-    searchStore.currentSearch = titleValue.value;
+    searchStore.currentCategory = selectedFilter.value;
+    await searchStore.getSearchResults(searchValue.value);
+    searchStore.currentSearch = searchValue.value;
     searchResults.value = searchStore.searchResults;
 };
 
-const clearTitleSearch = () => {
+const clearSearch = () => {
     searchStore.currentCategory = '';
     searchStore.currentSearch = '';
     searchStore.searchResults = {};
     searchResults.value = {};
-    titleValue.value = '';
+    searchValue.value = '';
+    selectedFilter.value = '';
 }
 
-const searchIdEvent = async () => {
-    searchStore.clearSearch();
-
-    searchStore.currentCategory = 'id';
-    await searchStore.getSearchResults(idValue.value);
-    searchStore.currentSearch = idValue.value;
-    searchResults.value = searchStore.searchResults;
-};
-
-const clearIdSearch = () => {
-    searchStore.currentCategory = '';
-    searchStore.currentSearch = '';
-    searchResults.value = '';
-    searchStore.searchResults = {};
-    idValue.value = '';
+const changeSelectFilter = () => {
+    console.log(`store category ${searchStore.currentCategory}`);
+    searchStore.currentCategory = selectedFilter.value;
+    console.log(`store category ${searchStore.currentCategory}`);
 };
 </script>
 

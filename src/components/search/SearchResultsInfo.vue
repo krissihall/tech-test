@@ -1,6 +1,6 @@
 <template>
     <div class="search-results-info-container row" :class="[ customClass ]">
-        <div v-if="!isEmpty(result.Poster)" class="col col-auto poster">
+        <div v-if="!isEmpty(result.Poster) && result.Poster !== 'N/A'" class="col col-auto poster">
             <img :src="result.Poster" :title="result.Title" class="poster-photo" />
         </div>
         <div class="col info">
@@ -50,22 +50,7 @@ const linkUrl = computed(() => `https://www.imdb.com/title/${props.result.imdbID
     position: relative;
 }
 
-.poster-photo {
-    display: block;
-    max-width: rem-calc(200);
-
-    .search-history & {
-        max-width: rem-calc(100);
-    }
-}
-
-.movie-details {
-    color: rgba($light, 0.5);
-    font-size: rem-calc(12);
-    @include light-font;
-}
-
-.search-history {
+.search-results-info-container {
     border-bottom: rem-calc(1) solid $tertiary;
     margin-bottom: rem-calc(24);
     padding-bottom: rem-calc(24);
@@ -81,5 +66,16 @@ const linkUrl = computed(() => `https://www.imdb.com/title/${props.result.imdbID
     .lead {
         font-size: rem-calc(16);
     }
+}
+
+.poster-photo {
+    display: block;
+    max-width: rem-calc(100);
+}
+
+.movie-details {
+    color: rgba($light, 0.5);
+    font-size: rem-calc(12);
+    @include light-font;
 }
 </style>

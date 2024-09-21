@@ -4,8 +4,8 @@ import { searchService } from '../services/search.service';
 export const useSearchStore = defineStore('searchStore', {
     state: () => ({
         currentSearch: null,
-        searchResults: {},
-        currentCategory: '',
+        searchResults: [],
+        currentCategory: 'search',
         isSearching: false,
         searchHistory: [],
         isHistorySaving: false
@@ -16,15 +16,36 @@ export const useSearchStore = defineStore('searchStore', {
             this.isSearching = true;
             searchService.getSearchResults(search, this.currentCategory)
                 .then((results) => {
-                    this.searchResults = results;
-                    if (results.Response !== 'False') {
-                        this.saveSearchResults(results);
+                    if (results.hasOwnProperty('Search')) {
+                        results.Search.forEach(item => {
+                            this.getResultDetails(item.imdbID, results.Response);
+                        });
+                    } else {
+                        this.searchResults = [results];
+
+                        if (results.Response !== 'False' || !results.Response) {
+                            this.saveSearchResults(results);
+                        }
                     }
                 })
                 .finally(() => {
                     this.getSearchHistory();
                     this.isSearching = false;
                 });
+        },
+        getResultDetails(id, res) {
+            searchService.getSearchResults(id, 'id')
+                .then((result) => {
+                    this.searchResults.push(result);
+
+                    if (res !== 'False' || !res) {
+                        this.saveSearchResults(result);
+                    }
+                });
+                // .finally(() => {
+                //     this.getSearchHistory();
+                //     this.isSearching = false;
+                // });
         },
         getSearchHistory() {
             this.isSearching = true;
@@ -39,7 +60,8 @@ export const useSearchStore = defineStore('searchStore', {
         clearSearch() {
             this.currentCategory = '';
             this.currentSearch = '';
-            this.searchResults = {};
+            this.searchResult = {};
+            this.searchResults = [];
         },
         saveSearchResults(result) {
             this.isHistorySaving = true;

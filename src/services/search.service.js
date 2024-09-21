@@ -11,9 +11,11 @@ const getSearchResults = (keyword, category) => {
         } else if (category === 'id') {
             // Search by IMDb ID
             cat = 'i';
+        } else if (category === 'search') {
+            cat = 's';
         } else {
             // Fallback to title if not set
-            cat = 't';
+            cat = 's';
         }
 
         const queryString = `&${cat}=`;

@@ -5,8 +5,8 @@
                 We're sorry, and error has occurred. {{ searchResults.Error }}
             </div>
         </div>
-        <div v-else-if="!isEmpty(searchResults) && !isSearching">
-            <SearchResultsInfo :result="searchResults" />
+        <div v-else-if="searchResults && !isEmpty(searchResults) && !isSearching">
+            <SearchResultsInfo v-for="result in searchResults" :result="result" :key="result.id" />
         </div>
         <div v-else-if="!isEmpty(searchResults) && isSearching">
             <LoadingSpinner className="is-searching" />

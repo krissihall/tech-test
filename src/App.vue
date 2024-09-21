@@ -7,7 +7,7 @@
         <Tabs value="searchMovies">
           <TabList>
             <Tab value="searchMovies">Search Movies</Tab>
-            <Tab value="searchHistory">Search History</Tab>
+            <Tab value="searchHistory" @click="refreshSearchHistory">Search History</Tab>
           </TabList>
           <TabPanel value="searchMovies">
             <SearchForms />
@@ -35,6 +35,10 @@ import Tab from 'primevue/tab';
 import TabPanel from 'primevue/tabpanel';
 
 const searchStore = useSearchStore();
+
+const refreshSearchHistory = async () => {
+  searchStore.getSearchHistory();
+};
 
 onMounted(() => {
   searchStore.getSearchHistory();
