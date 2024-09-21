@@ -9,15 +9,19 @@ body {
 }
 
 a {
-    color: color.adjust($primary, $lightness: 15%);
+    color: lighten($primary, 15%);
     text-decoration: none;
     transition: color 0.5s ease-in-out;
 
     &:hover,
     &:focus,
     &:active {
-        color: color.adjust($primary, $lightness: 30%);
+        color: lighten($primary, 30%);
     }
+}
+
+.page-content {
+    min-height: 80vh;
 }
 
 .container-fluid {

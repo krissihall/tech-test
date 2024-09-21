@@ -1,8 +1,13 @@
 <template>
     <div class="search-history-container container-fluid">
         <template v-if="searchHistory && searchHistory.length">
-            <SearchResultsInfo v-for="movie in searchHistory" :result="movie" className="search-history" :key="`movie-${movie.id}`" />
-            <!-- <Paginator v-model:searchHistory="id" :rows="10" :totalRecords="120" :rowsPerPageOptions="[10, 20, 30]"></Paginator> -->
+            <DataView :value="searchHistory" paginator :rows="10" :rowsPerPageOptions="[10, 20, 30]"
+                    currentPageReportTemplate="{first} to {last} of {totalRecords}"
+                    paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown">
+                <template #list="slotProps">
+                    <SearchResultsInfo v-for="(item, index) in slotProps.items" :result="item" className="history-result" :key="index" />
+                </template>
+            </DataView>
         </template>
         <template v-else>
             <p class="no-history">No search history.</p>
@@ -14,7 +19,7 @@
 import { computed, watch, onMounted } from 'vue';
 import { useSearchStore } from '@/stores';
 import { isEmpty } from '@/helpers';
-import Paginator from 'primevue/paginator';
+import DataView from 'primevue/dataview';
 import SearchResultsInfo from './SearchResultsInfo.vue';
 
 const searchStore = useSearchStore();

@@ -17,7 +17,7 @@
                     </div>
                     <div class="col col-auto">
                         <button class="btn btn-primary me-2" @click="searchEvent">Search</button>
-                        <button class="btn btn-secondary" @click="clearSearch">Clear</button>
+                        <button class="btn btn-light" @click="clearSearch">Clear</button>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "sass:color";
 
 @function strip-unit($number) {
     @if type-of($number)=='number' and not unitless($number) {
@@ -26,4 +27,16 @@
     }
 
     @return $value;
+}
+
+@function lighten($color, $percent) {
+    @return color.adjust($color, $lightness: $percent);
+}
+
+@function darken($color, $percent) {
+    @return color.adjust($color, $blackness: $percent);
+}
+
+@function hexToRGB($value) {
+    @return #{round(color.channel($value, "red", $space: rgb))}, #{round(color.channel($value, "green", $space: rgb))}, #{round(color.channel($value, "blue", $space: rgb))};
 }

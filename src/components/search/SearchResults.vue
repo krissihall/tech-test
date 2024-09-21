@@ -6,7 +6,13 @@
             </div>
         </div>
         <div v-else-if="searchResults && !isEmpty(searchResults) && !isSearching">
-            <SearchResultsInfo v-for="result in searchResults" :result="result" :key="result.id" />
+            <DataView :value="searchResults" paginator :rows="10" :rowsPerPageOptions="[10, 20, 30]"
+                    currentPageReportTemplate="{first} to {last} of {totalRecords}"
+                    paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown">
+                <template #list="slotProps">
+                    <SearchResultsInfo v-for="(item, index) in slotProps.items" :result="item" className="search-result" :key="index" />
+                </template>
+            </DataView>
         </div>
         <div v-else-if="!isEmpty(searchResults) && isSearching">
             <LoadingSpinner className="is-searching" />
@@ -18,6 +24,7 @@
 import { ref, computed, watch } from 'vue';
 import { useSearchStore } from '@/stores';
 import { isEmpty } from '@/helpers';
+import DataView from 'primevue/dataview';
 import SearchResultsInfo from '@/components/search/SearchResultsInfo.vue';
 import LoadingSpinner from '@/components/layout/LoadingSpinner.vue';
 

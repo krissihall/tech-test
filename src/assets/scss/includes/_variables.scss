@@ -1,3 +1,5 @@
+@use "sass:color";
+
 @import "mixins";
 @import "functions";
 
@@ -8,17 +10,40 @@
 // $secondary:       #fca311;
 // $tertiary:        #e5e5e5;
 
-$dark:        #2e294e;
-$light:       #f1e9da;
-$primary:     #d90368;
-$secondary:   #ffd400;
-$tertiary:    #541388;
+$dark:            #2e294e;
+$light:           #f1e9da;
+$light-hover:     darken($light, 10%);
+$primary:         #d90368;
+$primary-hover:   darken($primary, 10%);
+$secondary:       #ffd400;
+$secondary-hover: lighten($secondary, 15%);
+$tertiary:        #541388;
+$tertiary-hover:  darken($tertiary, 10%);
+$muted:           lighten($dark, 25%);
+$muted-hover:     darken($muted, 10%);
+$success:         lighten(#017842, 15%);
+$info:            lighten(#016c81, 15%);
+$warning:         lighten(#694f01, 20%);
+$danger:          #e10b20;
+
+$theme-colors: (
+    "primary": $primary,
+    "secondary": $secondary,
+    "tertiary": $tertiary,
+    "muted": $muted,
+    "success": $success,
+    "info": $info,
+    "warning": $warning,
+    "danger": $danger,
+    "light": $light,
+    "dark": $dark,
+);
 
 // - Global
 $base:             16;
 $global-bg-color:  $dark;
 $global-color:     $light;
-$max-screen-width: rem-calc(1600);
+$max-screen-width: rem-calc(900);
 $x-padding:        rem-calc(12);
 $y-padding:        rem-calc(12);
 

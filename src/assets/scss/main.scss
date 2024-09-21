@@ -4,5 +4,12 @@
 
 @import "includes/includes";
 
+@import "global/root";
 @import "global/body";
+@import "global/header";
 @import "global/loader";
+
+@import "components/data-view";
+@import "components/btn";
+@import "components/form-control";
+@import "components/select-control";

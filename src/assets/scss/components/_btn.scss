@@ -1,0 +1,56 @@
+.btn {
+    --bs-btn-border-width: #{rem-calc(2)};
+}
+
+.btn-primary {
+    --bs-btn-bg: #{$primary};
+    --bs-btn-border-color: #{$primary};
+    --bs-btn-hover-bg: #{$primary-hover};
+    --bs-btn-hover-border-color: #{$primary};
+    --bs-btn-active-bg: #{$primary-hover};
+    --bs-btn-active-border-color: #{$primary};
+}
+
+.btn-secondary {
+    --bs-btn-color: #{$dark};
+    --bs-btn-bg: #{$secondary};
+    --bs-btn-border-color: #{$secondary};
+    --bs-btn-hover-color: #{$dark};
+    --bs-btn-hover-bg: #{$secondary-hover};
+    --bs-btn-hover-border-color: #{$secondary};
+    --bs-btn-active-bg: #{$secondary-hover};
+    --bs-btn-active-border-color: #{$secondary};
+}
+
+.btn-tertiary {
+    --bs-btn-color: #{$light};
+    --bs-btn-bg: #{$tertiary};
+    --bs-btn-border-color: #{$tertiary};
+    --bs-btn-hover-color: #{$light};
+    --bs-btn-hover-bg: #{$tertiary-hover};
+    --bs-btn-hover-border-color: #{$tertiary};
+    --bs-btn-active-bg: #{$tertiary-hover};
+    --bs-btn-active-border-color: #{$tertiary};
+}
+
+.btn-light {
+    --bs-btn-color: #{$dark};
+    --bs-btn-bg: #{$light};
+    --bs-btn-border-color: #{$light};
+    --bs-btn-hover-color: #{$dark};
+    --bs-btn-hover-bg: #{$light-hover};
+    --bs-btn-hover-border-color: #{$light};
+    --bs-btn-active-bg: #{$light-hover};
+    --bs-btn-active-border-color: #{$light};
+}
+
+.btn-muted {
+    --bs-btn-color: #{$light};
+    --bs-btn-bg: #{$muted};
+    --bs-btn-border-color: #{$muted};
+    --bs-btn-hover-color: #{$light};
+    --bs-btn-hover-bg: #{$muted-hover};
+    --bs-btn-hover-border-color: #{$muted};
+    --bs-btn-active-bg: #{$muted-hover};
+    --bs-btn-active-border-color: #{$muted};
+}

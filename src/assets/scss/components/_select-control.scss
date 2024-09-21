@@ -1,0 +1,8 @@
+.form-select {
+    --bs-border-color: #{$primary};
+
+    &:focus {
+        border-color: #{rgba($primary, 0.4)};
+        box-shadow: 0 0 0 0.25rem rgba($primary, 0.25);
+    }
+}

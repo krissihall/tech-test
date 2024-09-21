@@ -1,0 +1,19 @@
+:root {
+    // Bootstrap root overrides
+    --bs-body-bg: #{$light};
+    --bs-body-color: #{$dark};
+    --bs-breakpoint-xs: 0;
+    --bs-breakpoint-sm: #{rem-calc(576)};
+    --bs-breakpoint-md: #{rem-calc(768)};
+    --bs-breakpoint-lg: #{rem-calc(1024)};
+    --bs-breakpoint-xl: #{rem-calc(1200)};
+    --bs-breakpoint-xxl: #{rem-calc(1400)};
+
+    @each $color, $value in $theme-colors {
+        --bs-#{$color}: #{$value};
+    }
+
+    @each $color, $value in $theme-colors {
+        --bs-#{$color}-rgb: #{hexToRGB($value)};
+    }
+}
