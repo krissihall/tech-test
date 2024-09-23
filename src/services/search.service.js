@@ -1,9 +1,11 @@
 import { handleResponse } from '../helpers/service-helpers';
 import { useGlobalStore } from '../stores';
+import { isEmpty, isYear } from '@/helpers';
 
-const getSearchResults = (keyword, category) => {
+const getSearchResults = (keyword, category, year) => {
     try {
-        let cat;
+        let queryString = '';
+        let cat = 's';
 
         if (category === 'title') {
             // Search by Title
@@ -11,16 +13,15 @@ const getSearchResults = (keyword, category) => {
         } else if (category === 'id') {
             // Search by IMDb ID
             cat = 'i';
-        } else if (category === 'search') {
-            cat = 's';
-        } else {
-            // Fallback to title if not set
-            cat = 's';
         }
 
-        const queryString = `&${cat}=`;
-        
-        return fetch(`/api/?apikey=${useGlobalStore().apiKey}${queryString}${keyword}`, {
+        queryString += `&${cat}=${keyword}`;
+
+        if (year && !isEmpty(year) && isYear(year)) {
+            queryString += `?year=${year}`;
+        }
+
+        return fetch(`/api/?apikey=${useGlobalStore().apiKey}${queryString}`, {
             method: 'get',
             headers: {
                 'Access-Control-Allow-Origin': 'http://localhost:5173',

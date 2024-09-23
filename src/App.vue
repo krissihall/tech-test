@@ -10,7 +10,7 @@
             <Tab value="searchHistory" @click="refreshSearchHistory">Search History</Tab>
           </TabList>
           <TabPanel value="searchMovies">
-            <SearchForms />
+            <SearchForm />
             <SearchResults />
           </TabPanel>
           <TabPanel value="searchHistory">
@@ -26,7 +26,7 @@
 import { computed, onMounted } from 'vue';
 import { useSearchStore } from './stores';
 import PageHeader from './components/layout/PageHeader.vue';
-import SearchForms from './components/search/SearchForms.vue';
+import SearchForm from './components/search/SearchForm.vue';
 import SearchResults from './components/search/SearchResults.vue';
 import SearchHistory from './components/search/SearchHistory.vue';
 import Tabs from 'primevue/tabs';

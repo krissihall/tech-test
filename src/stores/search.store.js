@@ -6,6 +6,7 @@ export const useSearchStore = defineStore('searchStore', {
         currentSearch: null,
         searchResults: [],
         currentCategory: 'search',
+        searchYear: null,
         isSearching: false,
         searchHistory: [],
         isHistorySaving: false
@@ -14,7 +15,7 @@ export const useSearchStore = defineStore('searchStore', {
     actions: {
         getSearchResults(search) {
             this.isSearching = true;
-            searchService.getSearchResults(search, this.currentCategory)
+            searchService.getSearchResults(search, this.currentCategory, this.searchYear)
                 .then((results) => {
                     if (results.hasOwnProperty('Search')) {
                         results.Search.forEach(item => {
@@ -42,10 +43,6 @@ export const useSearchStore = defineStore('searchStore', {
                         this.saveSearchResults(result);
                     }
                 });
-                // .finally(() => {
-                //     this.getSearchHistory();
-                //     this.isSearching = false;
-                // });
         },
         getSearchHistory() {
             this.isSearching = true;

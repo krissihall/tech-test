@@ -7,6 +7,14 @@ const isEmpty = (value) => {
     else return !value
 };
 
+const isYear = (str) => {
+    if (/^\d{4}$/.test(str)) {
+        const year = parseInt(str, 10);
+        return year >= 1000 && year <= 9999;
+    }
+    return false;
+};
+
 const dasherize = (string) => {
     return (string != null) && (typeof string === "string" || typeof string === String) ? string.toLowerCase()
         .trim()
@@ -42,6 +50,7 @@ const debounce = (fn, delay) => {
 
 export {
     isEmpty,
+    isYear,
     dasherize,
     generateID,
     throttle,

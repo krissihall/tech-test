@@ -8,12 +8,16 @@
                         <input v-model="searchValue" id="searchInput" type="text" ref="searchField" class="form-control" placeholder="Search" />
                     </div>
                     <div class="col">
-                        <label>Filter By:</label>
+                        <label for="filterSelect">Filter By:</label>
                         <select v-model="selectedFilter" ref="filterField" id="filterSelect" class="form-select" @change="changeSelectFilter">
                             <option disabled selected>Filter</option>
                             <option value="title">Title</option>
                             <option value="id">IMDb ID</option>
                         </select>
+                    </div>
+                    <div class="col input-year-container">
+                        <label for="searchYear">Year:</label>
+                        <input v-model="yearValue" id="searchYear" ref="yearField" type="number" class="form-control input-year" placeholder="Year" />
                     </div>
                     <div class="col col-auto">
                         <button class="btn btn-primary me-2" @click="searchEvent">Search</button>
@@ -38,9 +42,13 @@ const searchValue = ref(searchStore.currentSearch || '');
 const filterField = ref(null);
 const selectedFilter = ref(searchStore.currentCategory || 'search');
 
+const yearField = ref(null);
+const yearValue = ref(null);
+
 const searchEvent = async () => {
     searchStore.clearSearch();
 
+    searchStore.searchYear = yearValue.value;
     searchStore.currentCategory = selectedFilter.value;
     await searchStore.getSearchResults(searchValue.value);
     searchStore.currentSearch = searchValue.value;
@@ -54,15 +62,18 @@ const clearSearch = () => {
     searchResults.value = {};
     searchValue.value = '';
     selectedFilter.value = '';
+    yearValue.value = '';
 }
 
 const changeSelectFilter = () => {
-    console.log(`store category ${searchStore.currentCategory}`);
     searchStore.currentCategory = selectedFilter.value;
-    console.log(`store category ${searchStore.currentCategory}`);
 };
 </script>
 
 <style scoped lang="scss">
 @import "@/assets/scss/includes/includes";
+
+.input-year-container {
+    max-width: rem-calc(100);
+}
 </style>
