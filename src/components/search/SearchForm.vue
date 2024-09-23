@@ -3,16 +3,32 @@
         <div class="row justify-between mt-4 mb-4">
             <div class="col col-12 mb-2">
                 <div class="row align-items-end">
-                    <div class="col">
-                        <label class="me-2" for="searchInput">Search:</label>
+                    <div class="col col-3">
+                        <label class="me-2 required" for="searchInput">Search:</label>
                         <input v-model="searchValue" id="searchInput" type="text" ref="searchField" class="form-control" placeholder="Search" />
                     </div>
                     <div class="col">
                         <label for="filterSelect">Filter By:</label>
-                        <select v-model="selectedFilter" ref="filterField" id="filterSelect" class="form-select" @change="changeSelectFilter">
-                            <option disabled selected>Filter</option>
+                        <select v-model="selectedFilter" ref="filterField" id="filterSelect" class="form-select">
+                            <option disabled hidden selected>Filter</option>
                             <option value="title">Title</option>
                             <option value="id">IMDb ID</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="typeSelect">Type:</label>
+                        <select v-model="typeValue" ref="typeField" id="typeSelect" class="form-select">
+                            <option disabled hidden selected>Type</option>
+                            <option value="movie">Movie</option>
+                            <option value="series">Series</option>
+                            <option value="episode">Episode</option>
+                        </select>
+                    </div><div class="col">
+                        <label for="plotSelect">Plot:</label>
+                        <select v-model="plotValue" ref="plotField" id="plotSelect" class="form-select">
+                            <option disabled hidden selected>Plot</option>
+                            <option value="short">Short</option>
+                            <option value="full">Full</option>
                         </select>
                     </div>
                     <div class="col input-year-container">
@@ -45,11 +61,19 @@ const selectedFilter = ref(searchStore.currentCategory || 'search');
 const yearField = ref(null);
 const yearValue = ref(null);
 
+const typeSelect = ref(null);
+const typeValue = ref(null);
+
+const plotSelect = ref(null);
+const plotValue = ref(null);
+
 const searchEvent = async () => {
     searchStore.clearSearch();
 
     searchStore.searchYear = yearValue.value;
     searchStore.currentCategory = selectedFilter.value;
+    searchStore.searchType = typeValue.value;
+    searchStore.searchPlot = plotValue.value;
     await searchStore.getSearchResults(searchValue.value);
     searchStore.currentSearch = searchValue.value;
     searchResults.value = searchStore.searchResults;
@@ -62,12 +86,10 @@ const clearSearch = () => {
     searchResults.value = {};
     searchValue.value = '';
     selectedFilter.value = '';
-    yearValue.value = '';
+    yearField.value = '';
+    typeSelect.value = '';
+    plotSelect.value = '';
 }
-
-const changeSelectFilter = () => {
-    searchStore.currentCategory = selectedFilter.value;
-};
 </script>
 
 <style scoped lang="scss">

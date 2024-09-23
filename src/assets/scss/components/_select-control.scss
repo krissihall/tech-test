@@ -5,4 +5,8 @@
         border-color: #{rgba($primary, 0.4)};
         box-shadow: 0 0 0 0.25rem rgba($primary, 0.25);
     }
+
+    &:disabled:selected {
+        color: rgba($dark, 0.6);
+    }
 }
