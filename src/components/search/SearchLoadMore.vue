@@ -9,7 +9,7 @@
             </div>
             <div class="col">
                 <!-- Showing Page {{ currentPage }} of {{ totalPages }}<br /> -->
-                {{ totalResults }} Results
+                Showing {{ currentCount }} of {{ totalResults }} Results
             </div>
         </div>
     </div>
@@ -25,6 +25,7 @@ const searchStore = useSearchStore();
 const totalResults = computed(() => searchStore.numSearchResults);
 const perPage = computed(() => searchStore.showPerPage);
 const loadMore = computed(() => searchStore.loadMore);
+const currentCount = computed(() => searchStore.visibleSearchCount);
 const currentPage = ref(searchStore.currentPage || 1);
 const totalPages = ref(1);
 

@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import { useSearchStore } from './stores';
 import PageHeader from './components/layout/PageHeader.vue';
 import SearchForm from './components/search/SearchForm.vue';

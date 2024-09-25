@@ -25,7 +25,6 @@
 import { ref, computed } from 'vue';
 import { useSearchStore } from '@/stores';
 import { isEmpty } from '@/helpers';
-// import DataView from 'primevue/dataview';
 import SearchResultsInfo from '@/components/search/SearchResultsInfo.vue';
 import SearchLoadMore from '@/components/search/SearchLoadMore.vue';
 import LoadingSpinner from '@/components/layout/LoadingSpinner.vue';

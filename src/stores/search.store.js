@@ -6,6 +6,7 @@ export const useSearchStore = defineStore('searchStore', {
     state: () => ({
         currentSearch: null,
         numSearchResults: 0,
+        visibleSearchCount: 0,
         showPerPage: 10,
         currentPage: 1,
         searchResults: [],
@@ -29,10 +30,13 @@ export const useSearchStore = defineStore('searchStore', {
                 .then((results) => {
                     if (results.hasOwnProperty('Search')) {
                         this.numSearchResults = results.totalResults;
+                        this.visibleSearchCount += results.Search.length;
+
                         results.Search.forEach(item => {
                             this.getResultDetails(item.imdbID, results.Response);
                         });
                     } else {
+                        this.visibleSearchCount += results.length;
                         this.searchResults = [results];
 
                         if (results.Response !== 'False' || !results.Response) {
@@ -70,6 +74,7 @@ export const useSearchStore = defineStore('searchStore', {
             searchService.getSearchResults(this.currentSearch, this.currentCategory, this.searchYear, this.searchType, this.searchPlot, page)
                 .then((result) => {
                     if ((result.Search && result.Search.length) && result !== 'False' || !result) {
+                        this.visibleSearchCount += result.Search.length;
                         result.Search.forEach(item => {
                             this.getResultDetails(item.imdbID, result);
                         });
@@ -89,6 +94,7 @@ export const useSearchStore = defineStore('searchStore', {
             this.searchResult = {};
             this.searchResults = [];
             this.numSearchResults = 0;
+            this.visibleSearchCount = 0;
             this.currentPage = 1;
         },
         saveSearchResults(result) {
@@ -101,7 +107,6 @@ export const useSearchStore = defineStore('searchStore', {
                 searchService.addSearchHistoryEntry(result)
                     .then(
                         (data) => {
-                            console.log(`Submitted data: ${data}`);
                             resolve();
                         },
                         (error) => {
