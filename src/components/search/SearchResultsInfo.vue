@@ -53,7 +53,7 @@ const props = defineProps({
 
 const customClass = computed(() => props.className && !isEmpty(props.className) ? props.className : null);
 const linkUrl = computed(() => `https://www.imdb.com/title/${props.result.imdbID}/`);
-const hasError = computed(() => props.result.Response === 'False' || !result.Response);
+const hasError = computed(() => props.result.Response === 'False' || !props.result.Response);
 </script>
 
 <style scoped lang="scss">

@@ -15,6 +15,10 @@ const isYear = (str) => {
     return false;
 };
 
+const isNumber = (value) => {
+    return typeof value === 'number';
+};
+
 const dasherize = (string) => {
     return (string != null) && (typeof string === "string" || typeof string === String) ? string.toLowerCase()
         .trim()
@@ -48,11 +52,55 @@ const debounce = (fn, delay) => {
     }
 };
 
+const buildQueryParams = (keyword, category, year, type, plot, page) => {
+    let queryString = '';
+    let cat = 's';
+
+    if (category === 'title') {
+        cat = 't';
+    } else if (category === 'id') {
+        cat = 'i';
+    }
+
+    queryString += `&${cat}=${keyword}`;
+
+    if (year && !isEmpty(year) && isYear(year)) {
+        queryString += `&year=${year}`;
+    }
+
+    if (type && !isEmpty(type)) {
+        if (type === 'movie' || type === 'series' || type === 'episode') {
+            queryString += `&type=${type}`;
+        }
+    }
+
+    if (plot && !isEmpty(plot)) {
+        if (plot === 'short' || plot === 'full') {
+            queryString += `&plot=${plot}`;
+        }
+    }
+
+    if (page && !isEmpty(page) && isNumber(page)) {
+        queryString += `&page=${page}`;
+    }
+
+    queryString += '&r=json';
+    return queryString;
+}
+
+const round = (num, decimals) => {
+    const d = Math.pow(10, decimals);
+    return Math.ceil(num * d) / d;
+};
+
 export {
     isEmpty,
     isYear,
+    isNumber,
     dasherize,
     generateID,
     throttle,
-    debounce
+    debounce,
+    buildQueryParams, 
+    round
 };

@@ -5,7 +5,18 @@
                 <div class="row align-items-end">
                     <div class="col col-3">
                         <label class="me-2 required" for="searchInput">Search:</label>
-                        <input v-model="searchValue" id="searchInput" type="text" ref="searchField" class="form-control" placeholder="Search" />
+                        <input
+                            v-model.lazy="searchValue"
+                            id="searchInput"
+                            type="text"
+                            ref="searchField"
+                            class="form-control"
+                            placeholder="Search"
+                            :class="{ 'is-invalid': v$.search.$errors.length }"
+                        />
+                        <div v-for="error of v$.search.$errors" class="errors-container" :key="error.$uid">
+                            <div class="text-danger">{{ error.$message }}</div>
+                        </div>
                     </div>
                     <div class="col">
                         <label for="filterSelect">Filter By:</label>
@@ -48,6 +59,8 @@
 <script setup>
 import { ref } from 'vue';
 import { useSearchStore } from '@/stores';
+import { useVuelidate } from '@vuelidate/core';
+import { required, helpers } from '@vuelidate/validators';
 
 const searchStore = useSearchStore();
 const searchResults = ref(searchStore.searchResults || '');
@@ -61,22 +74,31 @@ const selectedFilter = ref(searchStore.currentCategory || 'search');
 const yearField = ref(null);
 const yearValue = ref(null);
 
-const typeSelect = ref(null);
 const typeValue = ref(null);
-
-const plotSelect = ref(null);
 const plotValue = ref(null);
 
-const searchEvent = async () => {
-    searchStore.clearSearch();
+const rules = {
+    search: { required: helpers.withMessage('Search field is required', required) }
+};
 
-    searchStore.searchYear = yearValue.value;
-    searchStore.currentCategory = selectedFilter.value;
-    searchStore.searchType = typeValue.value;
-    searchStore.searchPlot = plotValue.value;
-    await searchStore.getSearchResults(searchValue.value);
-    searchStore.currentSearch = searchValue.value;
-    searchResults.value = searchStore.searchResults;
+const v$ = useVuelidate(rules, searchValue);
+
+const searchEvent = async () => {
+    const valid = await v$.value.$validate();
+
+    if (valid) {
+        searchStore.clearSearch();
+
+        searchStore.searchYear = yearValue.value;
+        searchStore.currentCategory = selectedFilter.value;
+        searchStore.searchType = typeValue.value;
+        searchStore.searchPlot = plotValue.value;
+        await searchStore.getSearchResults(searchValue.value);
+        searchStore.currentSearch = searchValue.value;
+        searchResults.value = searchStore.searchResults;
+    } else {
+        searchStore.keywordError = true;
+    }
 };
 
 const clearSearch = () => {
@@ -87,8 +109,8 @@ const clearSearch = () => {
     searchValue.value = '';
     selectedFilter.value = '';
     yearField.value = '';
-    typeSelect.value = '';
-    plotSelect.value = '';
+    typeValue.value = '';
+    plotValue.value = '';
 }
 </script>
 
